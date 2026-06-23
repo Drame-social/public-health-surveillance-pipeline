@@ -119,10 +119,12 @@ report_dates = [
 onset_offsets = np.random.randint(-14, 1, N_CASES)
 
 # Age
+_age_probs = [max(0.001, 0.01 - abs(i - 35) * 0.0002) for i in range(100)]
+_age_probs = [p / sum(_age_probs) for p in _age_probs]  # normalize to sum to 1
 age_years_raw = np.random.choice(
     list(range(0, 100)),
     N_CASES,
-    p=[max(0.001, 0.01 - abs(i - 35) * 0.0002) for i in range(100)]
+    p=_age_probs
 )
 age_years_raw = np.clip(age_years_raw, 0, 99)
 
